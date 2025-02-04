@@ -22,28 +22,6 @@ return new class extends Migration
             $table->string('description')->nullable(); // Optionale Beschreibung der Rolle
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
         });
-
-        // Einfügen der Standardrollen in die `roles`-Tabelle
-        DB::table('roles')->insert([
-            [
-                'name' => 'admin',
-                'description' => 'Administrator',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'librarian',
-                'description' => 'Bibliothekar',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'user',
-                'description' => 'Benutzer',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
     }
 
     /**
