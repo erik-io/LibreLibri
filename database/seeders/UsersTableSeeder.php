@@ -32,6 +32,30 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        // Erstelle einen Bibliothekar-Account
+        User::factory()->librarian()->create([
+            'username' => 'librarian',
+            'email' => 'librarian@library.local',
+            'first_name' => 'Library',
+            'last_name' => 'Librarian',
+            'password' => Hash::make('librarian123'), // In Produktions anders handhaben!
+            'role_id' => 2, // Bibliothekar-Rolle
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Erstelle einen normalen Benutzer-Account
+        User::factory()->create([
+            'username' => 'user',
+            'email' => 'user@library.local',
+            'first_name' => 'John',
+            'last_name' => 'Doe',
+            'password' => Hash::make('user123'), // In Produktions anders handhaben!
+            'role_id' => 3, // Benutzer-Rolle
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         // Erstelle einige Bibliothekare
         User::factory()->librarian()->count(3)->create();
 
