@@ -69,6 +69,10 @@ class BooksTableSeeder extends Seeder
 
         foreach ($books as $book)
         {
+            // Temporäre Variablen für die Beziehungen speichern
+            $authors = $book['authors'];
+            $categories = $book['categories'];
+
             // Buch mit Eloquent erstellen
             $book = Book::create([
                 'title' => $book['title'],
@@ -79,11 +83,11 @@ class BooksTableSeeder extends Seeder
                 'publication_date' => $book['publication_date'],
             ]);
 
-            // Autoren verknüpfen
-            $book->authors()->attach($book['authors']);
+            // Die Werte aus den gespeicherten Arrays verwenden
+            $book->authors()->attach($authors);
 
             // Kategorien verknüpfen
-            $book->categories()->attach($book['categories']);
+            $book->categories()->attach($categories);
         }
     }
 }
