@@ -22,46 +22,6 @@ return new class extends Migration
             $table->string('description'); // Beschreibung des Status
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
         });
-
-        // Einfügen der Standard-Leihstatus in die `loan_statuses`-Tabelle
-        DB::table('loan_statuses')->insert([
-            [
-                'status' => 'available',
-                'description' => 'Verfügbar',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'status' => 'reserved',
-                'description' => 'Reserviert',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'status' => 'ready_for_pickup',
-                'description' => 'Abholbereit',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'status' => 'loaned',
-                'description' => 'Ausgeliehen',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'status' => 'overdue',
-                'description' => 'Überfällig',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'status' => 'returned',
-                'description' => 'Zurückgegeben',
-                'created_at' => now(),
-                'updated_at' => now()
-            ]
-        ]);
     }
 
     /**

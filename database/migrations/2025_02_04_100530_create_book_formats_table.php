@@ -22,34 +22,6 @@ return new class extends Migration
             $table->string('description')->nullable(); // Optionale Beschreibung des Formats
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
         });
-
-        // Einfügen der Standardformate in die `book_formats`-Tabelle
-        DB::table('book_formats')->insert([
-            [
-                'format' => 'hardcover',
-                'description' => 'Gebundene Ausgabe',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'format' => 'paperback',
-                'description' => 'Taschenbuch',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'format' => 'ebook',
-                'description' => 'Elektronisches Buch',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'format' => 'audiobook',
-                'description' => 'Hörbuch',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-        ]);
     }
 
     /**

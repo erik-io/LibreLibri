@@ -6,7 +6,7 @@ use App\Models\LibrarySettings;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class LibrarySettingsSeeder extends Seeder
+class LibrarySettingsTableSeeder extends Seeder
 {
     /**
      * Führt den Seeder aus.

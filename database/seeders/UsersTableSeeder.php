@@ -23,7 +23,7 @@ class UsersTableSeeder extends Seeder
     {
         // Stelle sicher, dass die Rollen existieren
         if (Role::count() === 0) {
-            $this->call(RoleTableSeeder::class);
+            $this->call(RolesTableSeeder::class);
         }
 
         // Erstelle einen Administrator-Account

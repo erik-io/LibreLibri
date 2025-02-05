@@ -14,12 +14,15 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            RoleTableSeeder::class,
+            RolesTableSeeder::class,
             UsersTableSeeder::class,
             AuthorsTableSeeder::class,
+            BookFormatsTableSeeder::class,
             BooksTableSeeder::class,
+            CategoriesTableSeeder::class,
+            CopyConditionsTableSeeder::class,
             CopiesTableSeeder::class,
-            LibrarySettingsSeeder::class
+            LibrarySettingsTableSeeder::class
         ]);
     }
 }

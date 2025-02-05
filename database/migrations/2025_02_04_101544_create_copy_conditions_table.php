@@ -22,34 +22,6 @@ return new class extends Migration
             $table->string('description')->nullable(); // Optionale Beschreibung des Zustands
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
         });
-
-        // Einfügen der Standardbedingungen in die `copy_conditions`-Tabelle
-        DB::table('copy_conditions')->insert([
-            [
-                'condition' => 'new',
-                'description' => 'Neu',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'condition' => 'used',
-                'description' => 'Gebraucht',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'condition' => 'damaged',
-                'description' => 'Beschädigt',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'condition' => 'lost',
-                'description' => 'Verloren',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
     }
 
     /**

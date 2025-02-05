@@ -24,59 +24,6 @@ return new class extends Migration
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
             $table->softDeletes(); // Soft-Delete Unterstützung
         });
-
-        // Einfügen der Standardkategorien in die `categories`-Tabelle
-        DB::table('categories')->insert([
-            [
-                'code' => 'NONE',
-                'name' => 'Uncategorized',
-                'description' => 'Standardkategorie für nicht zugeordnete Bücher',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'code' => 'FH',
-                'name' => 'Historischer Roman',
-                'description' => 'Romane mit historischem Setting',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'code' => 'FJH',
-                'name' => 'Science-Fiction',
-                'description' => 'Romane mit futuristischen oder alternativen Realitäten',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'code' => 'FA',
-                'name' => 'Belletristik',
-                'description' => 'Allgemeine erzählende Literatur',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'code' => 'FM',
-                'name' => 'Krimi & Thriller',
-                'description' => 'Spannende Geschichten mit kriminalistischen Elementen',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'code' => 'YFB',
-                'name' => 'Kinderbücher',
-                'description' => 'Bücher für Kinder und Jugendliche',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'code' => 'XQB',
-                'name' => 'Manga',
-                'description' => 'Japanische Comics und Graphic Novels',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-        ]);
     }
 
     /**
