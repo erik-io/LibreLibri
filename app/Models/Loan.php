@@ -7,16 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Repräsentiert eine Ausleihe
+ *
+ * @property int $id
+ * @property int $loan_transaction_id
+ * @property int $copy_id
+ * @property int $user_id
+ * @property \DateTime $loaned_on
+ * @property \DateTime $due_on
+ * @property \DateTime|null $returned_on
+ * @property int $loan_status_id
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
+ * @property \DateTime|null $deleted_at
+ */
 class Loan extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = [
+        'loan_transaction_id',
         'copy_id',
         'user_id',
         'loaned_on',
         'due_on',
         'returned_on',
-        'status_id',
+        'loan_status_id',
     ];
 
     protected $dates = [
