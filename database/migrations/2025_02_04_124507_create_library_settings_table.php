@@ -23,45 +23,6 @@ return new class extends Migration
             $table->string('description')->nullable(); // Optionale Beschreibung der Einstellung
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
         });
-
-        // Standard-Einstellungen einfügen
-        DB::table('library_settings')->insert([
-            [
-                'key' => 'max_loan_days',
-                'value' => '21',
-                'description' => 'Maximale Ausleihdauer in Tagen',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'max_loans_per_user',
-                'value' => '5',
-                'description' => 'Maximale gleichzeitige Ausleihen pro Benutzer',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'reservation_hold_days',
-                'value' => '7',
-                'description' => 'Anzahl der Tage, die ein reserviertes Buch zurückgehalten wird',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'late_fee_per_day',
-                'value' => '0.50',
-                'description' => 'Mahngebühr pro Tag in Euro',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'email_reminder_days',
-                'value' => '3',
-                'description' => 'Tage vor Fälligkeit für Erinnerungs-E-Mail',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        ]);
     }
 
     /**

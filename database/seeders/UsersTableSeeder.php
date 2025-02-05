@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersTableSeeder extends Seeder
 {
+    private const DEFAULT_PASSWORD = [
+        'admin' => 'admin123',
+        'librarian' => 'librarian123',
+        'user' => 'user123',
+    ];
+
     /**
      * Führt den Datenbank Seeder aus.
      */

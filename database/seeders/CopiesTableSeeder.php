@@ -5,8 +5,11 @@ namespace Database\Seeders;
 use App\Models\Book;
 use App\Models\ConditionHistory;
 use App\Models\Copy;
+use App\Models\User;
+use Exception;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class CopiesTableSeeder extends Seeder
 {
@@ -38,12 +41,16 @@ class CopiesTableSeeder extends Seeder
 
                 // Zustandshistorie für gebrauchte Exemplare anlagen
                 if ($condition_id === 2) {
+                    try {
                         ConditionHistory::create([
                             'copy_id' => $copy->id,
                             'old_condition_id' => '1',
                             'new_condition_id' => '2',
-                            'changed_by' => '1', // Admin-ID oder Dummy-User
+                            'changed_by' => User::where('role_id', 2)->first()->id, // Referenz auf einen Bibliothekar
                         ]);
+                    } catch (Exception $e) {
+                        Log::error("Fehler beim Erstellen der Zustandshistorie für Exemplar $copy->id: " . $e->getMessage());
+                    }
                 }
             }
         }

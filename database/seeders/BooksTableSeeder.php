@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Book;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
 
 class BooksTableSeeder extends Seeder
 {
@@ -69,25 +70,25 @@ class BooksTableSeeder extends Seeder
 
         foreach ($books as $book)
         {
-            // Temporäre Variablen für die Beziehungen speichern
-            $authors = $book['authors'];
-            $categories = $book['categories'];
 
-            // Buch mit Eloquent erstellen
-            $book = Book::create([
-                'title' => $book['title'],
-                'isbn13' => $book['isbn13'],
-                'isbn10' => $book['isbn10'],
-                'edition' => $book['edition'],
-                'format_id' => $book['format_id'],
-                'publication_date' => $book['publication_date'],
-            ]);
-
-            // Die Werte aus den gespeicherten Arrays verwenden
-            $book->authors()->attach($authors);
-
-            // Kategorien verknüpfen
-            $book->categories()->attach($categories);
+            try {
+                // Temporäre Variablen für die Beziehungen speichern
+                $authors = $book['authors'];
+                $categories = $book['categories'];// Buch mit Eloquent erstellen
+                $book = Book::create([
+                    'title' => $book['title'],
+                    'isbn13' => $book['isbn13'],
+                    'isbn10' => $book['isbn10'],
+                    'edition' => $book['edition'],
+                    'format_id' => $book['format_id'],
+                    'publication_date' => $book['publication_date'],
+                ]);// Die Werte aus den gespeicherten Arrays verwenden
+                $book->authors()->attach($authors);// Kategorien verknüpfen
+                $book->categories()->attach($categories);
+            } catch (\Exception $e) {
+                // Log des Fehlers
+                Log::error("Fehler beim Erstellen des Buches {$book['title']}: " . $e->getMessage());
+            }
         }
     }
 }
