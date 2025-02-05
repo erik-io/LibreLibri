@@ -9,8 +9,8 @@ return new class extends Migration
     /**
      * Führt die Migration aus.
      *
-     * Diese Methode erstellt die `copies`-Tabelle mit den Spalten `id`, `book_id`, `acquired_on`, `condition_id`, `created_at`, `updated_at` und `deleted_at`.
-     * Zusätzlich werden mehrere Indizes für die Spalten `condition_id`, `book_id` und `acquired_on` gesetzt.
+     * Diese Methode erstellt die `copies`-Tabelle mit den Spalten `id`, `book_id`, `acquired_on`, `copy_condition_id`, `created_at`, `updated_at` und `deleted_at`.
+     * Zusätzlich werden mehrere Indizes für die Spalten `copy_condition_id`, `book_id` und `acquired_on` gesetzt.
      */
     public function up(): void
     {
@@ -20,17 +20,17 @@ return new class extends Migration
             $table->foreignId('book_id')->constrained('books'); // Fremdschlüssel auf `books`
             $table->date('acquired_on'); // Erwerbsdatum des Exemplars
             // Fremdschlüssel zum Zustand (statt ENUM)
-            $table->foreignId('condition_id')->constrained('copy_conditions')->onDelete('restrict'); // Fremdschlüssel auf `copy_conditions`
+            $table->foreignId('copy_condition_id')->constrained('copy_conditions')->onDelete('restrict'); // Fremdschlüssel auf `copy_conditions`
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
             $table->softDeletes(); // Soft-Delete Unterstützung
 
-            $table->index('condition_id');  // Index auf `condition_id` für Inventursuche nach Zustand
+            $table->index('copy_condition_id');  // Index auf `copy_condition_id` für Inventursuche nach Zustand
 
-            // Index auf Kombination von `book_id` und `condition_id` für Abfragen wie "Alle Exemplare eines Buchs mit bestimmtem Zustand"
-            $table->index(['book_id', 'condition_id']);
+            // Index auf Kombination von `book_id` und `copy_condition_id` für Abfragen wie "Alle Exemplare eines Buchs mit bestimmtem Zustand"
+            $table->index(['book_id', 'copy_condition_id']);
 
-            // Index auf Kombination von `acquired_on` und `condition_id` für Inventurabfragen (nach Erwerbsdatum und Zustand)
-            $table->index(['acquired_on', 'condition_id']);
+            // Index auf Kombination von `acquired_on` und `copy_condition_id` für Inventurabfragen (nach Erwerbsdatum und Zustand)
+            $table->index(['acquired_on', 'copy_condition_id']);
         });
     }
 

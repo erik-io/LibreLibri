@@ -36,7 +36,7 @@ class CopiesTableSeeder extends Seeder
                 $copy = Copy::create([
                     'book_id' => $book->id,
                     'acquired_on' => $acquiredOn,
-                    'condition_id' => $condition_id,
+                    'copy_condition_id' => $condition_id,
                 ]);
 
                 // Zustandshistorie für gebrauchte Exemplare anlagen
