@@ -10,10 +10,14 @@ class CategoriesTableSeeder extends Seeder
 {
     /**
      * Führt den Datenbank Seeder aus.
+     *
+     * Diese Methode fügt eine Liste von Kategorien in die `categories`-Tabelle ein.
+     * Jede Kategorie hat die Felder `code`, `name` und `description`.
      */
     public function run(): void
     {
-        // https://www.editeur.org/files/Thema/1.6/v1.6_de/20250204_Thema_v1.6_de.html
+        // Liste der Kategorien, die eingefügt werden sollen
+        // Quelle: https://www.editeur.org/files/Thema/1.6/v1.6_de/20250204_Thema_v1.6_de.html
         $categories = [
             [
                 'code' => 0,
@@ -52,6 +56,7 @@ class CategoriesTableSeeder extends Seeder
             ],
         ];
 
+        // Einfügen der Kategorien in die `categories`-Tabelle
         foreach ($categories as $category) {
             Category::create($category);
         }

@@ -15,6 +15,10 @@ class CopiesTableSeeder extends Seeder
 {
     /**
      * Führt den Datenbank Seeder aus.
+     *
+     * Diese Methode fügt eine zufällige Anzahl von Exemplaren (2-5) für jedes Buch in die `copies`-Tabelle ein.
+     * Jedes Exemplar hat die Felder `book_id`, `acquired_on` und `copy_condition_id`.
+     * Für gebrauchte Exemplare wird zusätzlich eine Zustandshistorie in der `condition_histories`-Tabelle angelegt.
      */
     public function run(): void
     {

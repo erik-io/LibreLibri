@@ -9,7 +9,9 @@ use Illuminate\Database\Seeder;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Führt die Datenbank-Seeds aus.
+     *
+     * Diese Methode ruft die Seeder-Klassen auf, die die Datenbank mit den notwendigen Daten füllen.
      */
     public function run(): void
     {
@@ -22,6 +24,7 @@ class DatabaseSeeder extends Seeder
             CategoriesTableSeeder::class,
             CopyConditionsTableSeeder::class,
             CopiesTableSeeder::class,
+            LoanStatusesTableSeeder::class,
             LibrarySettingsTableSeeder::class
         ]);
     }

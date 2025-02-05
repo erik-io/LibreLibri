@@ -11,6 +11,9 @@ class BooksTableSeeder extends Seeder
 {
     /**
      * Führt die Datenbank-Seeds aus.
+     *
+     * Diese Methode fügt eine Liste von Büchern in die `books`-Tabelle ein.
+     * Jedes Buch hat die Felder `title`, `isbn13`, `isbn10`, `edition`, `format_id`, `publication_date`, `authors` und `categories`.
      */
     public function run(): void
     {
@@ -70,11 +73,12 @@ class BooksTableSeeder extends Seeder
 
         foreach ($books as $book)
         {
-
             try {
                 // Temporäre Variablen für die Beziehungen speichern
                 $authors = $book['authors'];
-                $categories = $book['categories'];// Buch mit Eloquent erstellen
+                $categories = $book['categories'];
+
+                // Buch mit Eloquent erstellen
                 $book = Book::create([
                     'title' => $book['title'],
                     'isbn13' => $book['isbn13'],
@@ -82,8 +86,12 @@ class BooksTableSeeder extends Seeder
                     'edition' => $book['edition'],
                     'format_id' => $book['format_id'],
                     'publication_date' => $book['publication_date'],
-                ]);// Die Werte aus den gespeicherten Arrays verwenden
-                $book->authors()->attach($authors);// Kategorien verknüpfen
+                ]);
+
+                // Die Werte aus den gespeicherten Arrays verwenden
+                $book->authors()->attach($authors);
+
+                // Kategorien verknüpfen
                 $book->categories()->attach($categories);
             } catch (\Exception $e) {
                 // Log des Fehlers

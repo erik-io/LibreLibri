@@ -10,9 +10,13 @@ class CopyConditionsTableSeeder extends Seeder
 {
     /**
      * Führt den Datenbank Seeder aus.
+     *
+     * Diese Methode fügt eine Liste von Zuständen für Exemplare in die `copy_conditions`-Tabelle ein.
+     * Jeder Zustand hat die Felder `condition` und `description`.
      */
     public function run(): void
     {
+        // Liste der Zustände, die eingefügt werden sollen
         $copy_conditions = [
             [
                 'condition' => 'new',
@@ -32,6 +36,7 @@ class CopyConditionsTableSeeder extends Seeder
             ],
         ];
 
+        // Einfügen der Zustände in die `copy_conditions`-Tabelle
         foreach ($copy_conditions as $copy_condition) {
             CopyCondition::create($copy_condition);
         }

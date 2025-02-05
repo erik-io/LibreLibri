@@ -10,9 +10,13 @@ class LoanStatusesTableSeeder extends Seeder
 {
     /**
      * Führt den Datenbank Seeder aus.
+     *
+     * Diese Methode fügt eine Liste von Ausleihstatus in die `loan_statuses`-Tabelle ein.
+     * Jeder Status hat die Felder `status` und `description`.
      */
     public function run(): void
     {
+        // Liste der Ausleihstatus, die eingefügt werden sollen
         $loan_statuses = [
             [
                 'status' => 'available',
@@ -40,6 +44,7 @@ class LoanStatusesTableSeeder extends Seeder
             ]
         ];
 
+        // Einfügen der Ausleihstatus in die `loan_statuses`-Tabelle
         foreach ($loan_statuses as $loan_status) {
             LoanStatus::create($loan_status);
         }
