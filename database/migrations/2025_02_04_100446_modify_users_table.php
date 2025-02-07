@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('username')->unique()->after('id'); // Eindeutiger Benutzername
             $table->string('first_name', 50)->after('username'); // Vorname des Benutzers
             $table->string('last_name', 50)->after('first_name'); // Nachname des Benutzers
-            $table->foreignId('role_id')->after('email')->default(3)->constrained('roles')->onDelete('restrict'); // Fremdschlüssel zur `roles`-Tabelle
+            $table->foreignId('role_id')->after('username')->default(3)->constrained('roles')->onDelete('restrict'); // Fremdschlüssel zur `roles`-Tabelle
         });
     }
 

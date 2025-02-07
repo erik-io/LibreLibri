@@ -68,6 +68,9 @@ class UsersTableSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
+        // Erstelle einige Administratoren
+        User::factory()->admin()->count(2)->create();
+
         // Erstelle einige Bibliothekare
         User::factory()->librarian()->count(3)->create();
 
