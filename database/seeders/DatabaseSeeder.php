@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,7 +24,8 @@ class DatabaseSeeder extends Seeder
             CopyConditionsTableSeeder::class,
             CopiesTableSeeder::class,
             LoanStatusesTableSeeder::class,
-            LibrarySettingsTableSeeder::class
+            LibrarySettingsTableSeeder::class,
+            LoanTransactionsTableSeeder::class
         ]);
     }
 }

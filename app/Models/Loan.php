@@ -13,10 +13,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $id
  * @property int $loan_transaction_id
  * @property int $copy_id
- * @property int $user_id
- * @property \DateTime $loaned_on
- * @property \DateTime $due_on
- * @property \DateTime|null $returned_on
+ * @property \DateTime $loan_date
+ * @property \DateTime $due_date
+ * @property \DateTime|null $return_date
  * @property int $loan_status_id
  * @property \DateTime $created_at
  * @property \DateTime $updated_at
@@ -28,17 +27,16 @@ class Loan extends Model
     protected $fillable = [
         'loan_transaction_id',
         'copy_id',
-        'user_id',
-        'loaned_on',
-        'due_on',
-        'returned_on',
+        'loan_date',
+        'due_date',
+        'return_date',
         'loan_status_id',
     ];
 
     protected $dates = [
-        'loaned_on',
-        'due_on',
-        'returned_on',
+        'loan_date',
+        'due_date',
+        'return_date',
         'created_at',
         'updated_at',
         'deleted_at',
