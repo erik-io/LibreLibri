@@ -96,7 +96,7 @@ class LoanTransactionBuilder
 
         // Standardmäßiges Fälligkeitsdatum berechnen falls nicht gesetzt
         if (!$this->dueDate) {
-            $this->dueDate = $this->loanDate->addDays($this->defaultLoanDuration);
+            $this->dueDate = $this->loanDate->copy()->addDays($this->defaultLoanDuration);
         }
 
         // Status "ausgeliehen" aus der Datenbank abrufen
