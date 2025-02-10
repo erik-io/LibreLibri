@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Laravel + Vite" type="CompoundRunConfigurationType">
+    <toRun name="Vite Dev Server" type="js.build_tools.npm" />
+    <toRun name="Laravel Server" type="PhpLocalRunConfigurationType" />
+    <method v="2" />
+  </configuration>
+</component>
