@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('book_id')->constrained('books')->onDelete('cascade'); // Fremdschlüssel auf `books` mit Löschweitergabe
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade'); // Fremdschlüssel auf `categories` mit Löschweitergabe
             $table->primary(['book_id', 'category_id']); // Primärschlüssel auf Kombination von `book_id` und `category_id`
+            $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
 
             // Zusätzlicher Index:
             $table->index(['category_id', 'book_id']); // Index auf Kombination von `category_id` und `book_id` für Abfragen wie "Alle Bücher in einer Kategorie"
