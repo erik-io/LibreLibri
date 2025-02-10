@@ -12,7 +12,7 @@ class LoanStatusesTableSeeder extends Seeder
      * Führt den Datenbank Seeder aus.
      *
      * Diese Methode fügt eine Liste von Ausleihstatus in die `loan_statuses`-Tabelle ein.
-     * Jeder Status hat die Felder `status` und `description`.
+     * Jeder Status hat die Felder `status` und `label`.
      */
     public function run(): void
     {
@@ -20,27 +20,27 @@ class LoanStatusesTableSeeder extends Seeder
         $loan_statuses = [
             [
                 'status' => 'available',
-                'description' => 'Verfügbar',
+                'label' => 'Verfügbar',
             ],
             [
                 'status' => 'reserved',
-                'description' => 'Reserviert',
+                'label' => 'Reserviert',
             ],
             [
                 'status' => 'ready_for_pickup',
-                'description' => 'Abholbereit',
+                'label' => 'Abholbereit',
             ],
             [
                 'status' => 'loaned',
-                'description' => 'Ausgeliehen',
+                'label' => 'Ausgeliehen',
             ],
             [
                 'status' => 'overdue',
-                'description' => 'Überfällig',
+                'label' => 'Überfällig',
             ],
             [
                 'status' => 'returned',
-                'description' => 'Zurückgegeben',
+                'label' => 'Zurückgegeben',
             ]
         ];
 

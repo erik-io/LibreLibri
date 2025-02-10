@@ -10,7 +10,7 @@ return new class extends Migration
     /**
      * Führt die Migration aus.
      *
-     * Diese Methode erstellt die `copy_conditions`-Tabelle mit den Spalten `id`, `condition`, `description`, `created_at` und `updated_at`.
+     * Diese Methode erstellt die `copy_conditions`-Tabelle mit den Spalten `id`, `condition`, `label`, `created_at` und `updated_at`.
      * Zusätzlich werden mehrere Standardbedingungen in die Tabelle eingefügt.
      */
     public function up(): void
@@ -18,8 +18,8 @@ return new class extends Migration
         // Erstellen der `copy_conditions`-Tabelle
         Schema::create('copy_conditions', function (Blueprint $table) {
             $table->id(); // Primärschlüssel
-            $table->string('condition')->unique(); // Eindeutige Bezeichnung des Zustands
-            $table->string('description')->nullable(); // Optionale Beschreibung des Zustands
+            $table->string('condition')->unique(); // Eindeutige Bedingung
+            $table->string('label')->nullable(); // Bezeichnung der Bedingung
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
         });
     }

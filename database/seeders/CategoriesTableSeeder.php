@@ -21,37 +21,37 @@ class CategoriesTableSeeder extends Seeder
         $categories = [
             [
                 'code' => 0,
-                'name' => 'Keine Kategorie',
+                'genre' => 'Keine Kategorie',
                 'description' => 'Keine Kategorie',
             ],
             [
                 'code' => 'FH',
-                'name' => 'Historischer Roman',
+                'genre' => 'Historischer Roman',
                 'description' => 'Romane mit historischem Setting',
             ],
             [
                 'code' => 'FJH',
-                'name' => 'Science-Fiction',
+                'genre' => 'Science-Fiction',
                 'description' => 'Romane mit futuristischen oder alternativen Realitäten',
             ],
             [
                 'code' => 'FA',
-                'name' => 'Belletristik',
+                'genre' => 'Belletristik',
                 'description' => 'Allgemeine erzählende Literatur',
             ],
             [
                 'code' => 'FM',
-                'name' => 'Krimi & Thriller',
+                'genre' => 'Krimi & Thriller',
                 'description' => 'Spannende Geschichten mit kriminalistischen Elementen',
             ],
             [
                 'code' => 'YFB',
-                'name' => 'Kinderbücher',
+                'genre' => 'Kinderbücher',
                 'description' => 'Bücher für Kinder und Jugendliche',
             ],
             [
                 'code' => 'XQB',
-                'name' => 'Manga',
+                'genre' => 'Manga',
                 'description' => 'Japanische Comics und Graphic Novels',
             ],
         ];

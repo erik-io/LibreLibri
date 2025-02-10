@@ -10,7 +10,7 @@ return new class extends Migration
     /**
      * Führt die Migration aus.
      *
-     * Diese Methode erstellt die `loan_statuses`-Tabelle mit den Spalten `id`, `status`, `description`, `created_at` und `updated_at`.
+     * Diese Methode erstellt die `loan_statuses`-Tabelle mit den Spalten `id`, `status`, `label`, `created_at` und `updated_at`.
      * Zusätzlich werden mehrere Standard-Leihstatus in die Tabelle eingefügt.
      */
     public function up(): void
@@ -18,8 +18,8 @@ return new class extends Migration
         // Erstellen der `loan_statuses`-Tabelle
         Schema::create('loan_statuses', function (Blueprint $table) {
             $table->id(); // Primärschlüssel
-            $table->string('status', 50)->unique(); // Eindeutiger Status
-            $table->string('description'); // Beschreibung des Status
+            $table->string('status')->unique(); // Eindeutiger Status
+            $table->string('label'); // Bezeichnung des Status
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
         });
     }

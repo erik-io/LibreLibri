@@ -20,19 +20,19 @@ class CopyConditionsTableSeeder extends Seeder
         $copy_conditions = [
             [
                 'condition' => 'new',
-                'description' => 'Neu',
+                'label' => 'Neu',
             ],
             [
                 'condition' => 'used',
-                'description' => 'Gebraucht',
+                'label' => 'Gebraucht',
             ],
             [
                 'condition' => 'damaged',
-                'description' => 'Beschädigt',
+                'label' => 'Beschädigt',
             ],
             [
                 'condition' => 'lost',
-                'description' => 'Verloren',
+                'label' => 'Verloren',
             ],
         ];
 

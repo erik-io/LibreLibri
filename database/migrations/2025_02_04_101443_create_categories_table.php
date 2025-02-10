@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id(); // Primärschlüssel
             $table->string('code', 10)->unique()->comment('EDItEUR Thema-Code'); // Eindeutiger Code für das Genre
-            $table->string('name', 50)->nullable()->comment('Genre-Bezeichnung'); // Optionale Bezeichnung des Genres
+            $table->string('genre', 50)->nullable()->comment('Genre-Bezeichnung'); // Optionale Bezeichnung des Genres
             $table->string('description')->nullable()->comment('Beschreibung des Genres'); // Optionale Beschreibung des Genres
             $table->timestamps(); // Zeitstempel für Erstellung und Aktualisierung
             $table->softDeletes(); // Soft-Delete Unterstützung

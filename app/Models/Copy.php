@@ -35,6 +35,16 @@ class Copy extends Model
         'deleted_at',
     ];
 
+    public function isAvailable(): bool
+    {
+        $availableStatusId = cache()->remember('loan_status_available', 3600, function () {
+            return LoanStatus::where('status', 'available')->first()->id;
+        });
+
+        $latestLoan = $this->loans()->latest()->first();
+        return !$latestLoan || $latestLoan->loan_status_id === $availableStatusId;
+    }
+
     /**
      * Beziehung zum zugehörigen Buch
      *
