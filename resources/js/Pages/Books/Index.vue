@@ -1,9 +1,15 @@
 <script lang="ts" setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import { Button } from '@/components/ui/button';
+import { CheckCircle, AlertCircle, Clock } from 'lucide-vue-next';
+
+const handleLoan = () => {
+  // Hier kommt später die Logik zum Ausleihen des Buches hin
+    alert('Buch ausgeliehen');
+};
+
 </script>
 
 <template>
@@ -30,7 +36,7 @@ import TextInput from '@/Components/TextInput.vue';
 
             <!-- Büchertabelle -->
             <table class="w-full text-left">
-                <thead>
+                <thead class="border-b">
                     <tr>
                         <th>Titel</th>
                         <th>Autor</th>
@@ -40,7 +46,7 @@ import TextInput from '@/Components/TextInput.vue';
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                <tr class="border-b">
                         <td>
                             Der Herr der Ringe
                         </td>
@@ -50,16 +56,22 @@ import TextInput from '@/Components/TextInput.vue';
                         <td>
                             978-3-608-93981-1
                         </td>
-                        <td>
-                            Verfügbar
+                      <td class="flex items-center gap-2">
+                        <!-- Verfügbar -->
+                        <CheckCircle class="w-5 h-5 text-green-500"/>
+                        Verfügbar
                         </td>
                         <td>
-                            <PrimaryButton>
+                            <Button
+                              variant="default"
+                            size="sm"
+                              @click="handleLoan"
+                            >
                                 Ausleihen
-                            </PrimaryButton>
+                            </Button>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="border-b">
                       <td>
                         Harry Potter und der Stein der Weisen
                       </td>
@@ -69,13 +81,19 @@ import TextInput from '@/Components/TextInput.vue';
                       <td>
                         978-3-551-55677-8
                       </td>
-                      <td>
+                      <td class="flex items-center gap-2">
+                        <!-- Reserviert -->
+                        <Clock class="w-5 h-5 text-yellow-500"/>
                         Reserviert
                       </td>
                       <td>
-                        <SecondaryButton>
+                        <Button
+                        variant="default"
+                        size="sm"
+                        @click="handleLoan"
+                        disabled>
                           Ausleihen
-                        </SecondaryButton>
+                        </Button>
                       </td>
                     </tr>
                     <tr>
@@ -88,13 +106,19 @@ import TextInput from '@/Components/TextInput.vue';
                       <td>
                         978-3-7915-0460-3
                       </td>
-                      <td>
+                      <td class="flex items-center gap-2">
+                        <!-- Ausgeliehen -->
+                        <AlertCircle class="w-5 h-5 text-red-500"/>
                         Ausgeliehen
                       </td>
                       <td>
-                        <SecondaryButton>
+                        <Button
+                        variant="default"
+                        size="sm"
+                        @click="handleLoan"
+                        disabled>
                           Ausleihen
-                        </SecondaryButton>
+                        </Button>
                       </td>
                     </tr>
                 </tbody>
