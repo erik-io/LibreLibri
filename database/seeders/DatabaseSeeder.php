@@ -19,13 +19,13 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             AuthorsTableSeeder::class,
             BookFormatsTableSeeder::class,
-            BooksTableSeeder::class,
             CategoriesTableSeeder::class,
+            BooksTableSeeder::class,
             CopyConditionsTableSeeder::class,
             CopiesTableSeeder::class,
             LoanStatusesTableSeeder::class,
             LibrarySettingsTableSeeder::class,
-            LoanTransactionsTableSeeder::class
+            // LoanTransactionsTableSeeder::class
         ]);
     }
 }

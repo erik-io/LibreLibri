@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Book;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
 
@@ -17,7 +17,6 @@ class BooksTableSeeder extends Seeder
      */
     public function run(): void
     {
-        // Bücher einfügen
         $books = [
             [
                 'title' => 'Der Herr der Ringe - Die Gefährten',
@@ -27,7 +26,7 @@ class BooksTableSeeder extends Seeder
                 'format_id' => 1, // Hardcover
                 'publication_date' => '2001-01-01',
                 'authors' => [5], // Tolkien
-                'categories' => [2] // Fantasy
+                'category_value' => 'FM' // Fantasyliteratur
             ],
             [
                 'title' => 'Harry Potter und der Stein der Weisen',
@@ -37,7 +36,7 @@ class BooksTableSeeder extends Seeder
                 'format_id' => 1, // Hardcover
                 'publication_date' => '1998-07-21',
                 'authors' => [2], // Rowling
-                'categories' => [6] // Kinderbücher
+                'category_value' => 'YF' // Kinder/Jugendliche: Romane, Erzählungen, Tatsachenberichte
             ],
             [
                 'title' => 'Es',
@@ -47,7 +46,7 @@ class BooksTableSeeder extends Seeder
                 'format_id' => 2, // Paperback
                 'publication_date' => '1986-09-15',
                 'authors' => [1], // King
-                'categories' => [5] // Horror
+                'category_value' => 'FKC' // Klassische Horror- und Geistergeschichten
             ],
             [
                 'title' => 'Sakrileg',
@@ -57,7 +56,7 @@ class BooksTableSeeder extends Seeder
                 'format_id' => 2, // Paperback
                 'publication_date' => '2004-03-18',
                 'authors' => [3], // Brown
-                'categories' => [5] // Thriller
+                'category_value' => 'FHD' // Spionagethriller
             ],
             [
                 'title' => 'Das Game',
@@ -67,36 +66,51 @@ class BooksTableSeeder extends Seeder
                 'format_id' => 1, // Hardcover
                 'publication_date' => '2019-09-09',
                 'authors' => [7], // Elsberg
-                'categories' => [5] // Thriller
+                'category_value' => 'FHD' // Spionagethriller
             ],
         ];
 
-        foreach ($books as $book)
-        {
+        foreach ($books as $bookData) {
             try {
-                // Temporäre Variablen für die Beziehungen speichern
-                $authors = $book['authors'];
-                $categories = $book['categories'];
+                // Loggen der verarbeiteten Bücher
+                Log::info("Verarbeite Buch: " . $bookData['title']);
 
-                // Buch mit Eloquent erstellen
+                // Kategorie anhand des Werts abrufen
+                $query = Category::where('value', $bookData['category_value']);
+
+                // Loggen der SQL-Abfrage und der Bindings
+                Log::info("SQL: " . $query->toSql());
+                Log::info("Bindings: " . implode(", ", $query->getBindings()));
+
+                $category = $query->first();
+                if (!$category) {
+                    // Loggen, wenn die Kategorie nicht gefunden wurde
+                    Log::error("Kategorie nicht gefunden: " . $bookData['category_value']);
+                    continue;
+                }
+
+                // Loggen der gefundenen Kategorie-ID
+                Log::info("Gefundene Kategorie ID: " . $category->id);
+
                 $book = Book::create([
-                    'title' => $book['title'],
-                    'isbn13' => $book['isbn13'],
-                    'isbn10' => $book['isbn10'],
-                    'edition' => $book['edition'],
-                    'format_id' => $book['format_id'],
-                    'publication_date' => $book['publication_date'],
+                    'title' => $bookData['title'],
+                    'isbn13' => $bookData['isbn13'],
+                    'isbn10' => $bookData['isbn10'],
+                    'edition' => $bookData['edition'],
+                    'format_id' => $bookData['format_id'],
+                    'publication_date' => $bookData['publication_date'],
                 ]);
 
-                // Die Werte aus den gespeicherten Arrays verwenden
-                $book->authors()->attach($authors);
+                $book->authors()->attach($bookData['authors']);
+                $book->categories()->attach([$category->id]);
 
-                // Kategorien verknüpfen
-                $book->categories()->attach($categories);
+                // Loggen, wenn das Buch erfolgreich erstellt wurde
+                Log::info("Buch erstellt und Kategorie verknüpft");
             } catch (\Exception $e) {
-                // Log des Fehlers
-                Log::error("Fehler beim Erstellen des Buches {$book['title']}: " . $e->getMessage());
+                // Loggen von Fehlern beim Erstellen des Buches
+                Log::error("Fehler beim Erstellen des Buches {$bookData['title']}: " . $e->getMessage());
             }
         }
     }
 }
+
