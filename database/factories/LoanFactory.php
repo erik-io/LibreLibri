@@ -60,6 +60,9 @@ class LoanFactory extends Factory
         // https://laravel.com/docs/5.2/eloquent-relationships#eager-loading
         $copies = Copy::with('book')->get();
 
+        // Status "zurückgegeben" aus der Datenbank abrufen
+        $returnedStatus = LoanStatus::where('status', 'returned')->first();
+
         // Für jede gewünschte Ausleihtransaktion
         for ($i = 0; $i < $count; $i++) {
             // Wähle zufälligen Benutzer
@@ -104,7 +107,46 @@ class LoanFactory extends Factory
 
             // Erstelle die Ausleihe
             try {
-                $builder->build();
+                $transaction = $builder->build();
+
+                // Für jede Ausleihe in der Transaktion
+                foreach ($transaction->loans as $loan) {
+                    // Berechne die Wahrscheinlichkeit einer Rückgabe
+                    $daysSinceLoan = $loanDate->diffInDays(now());
+
+                    // Verschiedene Rückgabe-Szenarien mit unterschiedlichen Wahrscheinlichkeiten
+                    if ($daysSinceLoan > 21 || rand(1, 100) <= 80) {
+                        // Bestimmte das Rückgabeverhalten
+                        $scenario = rand(1, 100);
+                        if ($scenario <= 60) {
+                            // 60 % - Pünktliche Rückgabe (bis 21 Tage)
+                            $maxDays = 21;
+                        } elseif ($scenario <= 90) {
+                            // 30 % - Leicht verspätet (22-25 Tage)
+                            $maxDays = 25;
+                        } else {
+                            // 10 % - Stark verspätet (26-30 Tage)
+                            $maxDays = 30;
+                        }
+                    }
+
+                    $minReturnDate = $loanDate->copy()->addDays(1);
+                    $maxReturnDate = min(
+                        $loanDate->copy()->addDays($maxDays),
+                        now()
+                    );
+
+                    // Zufälliges Rückgabedatum innerhalb des erlaubten Zeitraums
+                    $returnDate = Date::createFromTimestamp(
+                        rand($minReturnDate->timestamp, $maxReturnDate->timestamp)
+                    );
+
+                    // Aktualisiere die Ausleihe
+                    $loan->update([
+                        'return_date' => $returnDate,
+                        'loan_status_id' => $returnedStatus->id
+                    ]);
+                }
             } catch (\InvalidArgumentException $e) {
                 // Wenn die Ausleihe nicht erstellt werden kann, überspringe diese Transaktion
                 continue;

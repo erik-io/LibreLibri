@@ -121,7 +121,7 @@ class LoanTransactionBuilder
                 ]);
             }
 
-            return $transaction;
+            return $transaction->load('loans');
         });
     }
 

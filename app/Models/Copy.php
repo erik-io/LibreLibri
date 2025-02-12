@@ -37,22 +37,58 @@ class Copy extends Model
 
     public function isAvailable(): bool
     {
-        $availableStatusId = cache()->remember('loan_status_available', 3600, function () {
-            return LoanStatus::where('status', 'available')->first()->id;
+        $availableStatus = cache()->remember('loan_status_available', 3600, function () {
+            return LoanStatus::whereIn('status', ['available', 'returned'])
+                ->pluck('id')
+                ->toArray();
         });
 
         $latestLoan = $this->loans()->latest()->first();
-        return !$latestLoan || $latestLoan->loan_status_id === $availableStatusId;
+        // Ein Exemplar ist verfügbar, wenn es entweder keine Ausleihe hat
+        // oder der letzte Status 'available' oder 'returned' ist
+        return !$latestLoan || in_array($latestLoan->loan_status_id, $availableStatus);
     }
 
     public function isReserved(): bool
     {
-        $reservedStatusId = cache()->remember('loan_status_reserved', 3600, function () {
-            return LoanStatus::where('status', 'reserved')->first()->id;
+        $reservedStatus = cache()->remember('loan_status_reserved', 3600, function () {
+            return LoanStatus::whereIn('status', ['reserved', 'ready_for_pickup'])
+                ->pluck('id')
+                ->toArray();
         });
 
         $latestLoan = $this->loans()->latest()->first();
-        return $latestLoan && $latestLoan->loan_status_id === $reservedStatusId;
+        return $latestLoan && in_array($latestLoan->loan_status_id, $reservedStatus);
+    }
+
+    public function isLoaned(): bool
+    {
+        $loanedStatus = cache()->remember('loan_status_loaned', 3600, function () {
+            return LoanStatus::whereIn('status', ['loaned', 'overdue'])
+                ->pluck('id')
+                ->toArray();
+        });
+
+        $latestLoan = $this->loans()->latest()->first();
+        return $latestLoan && in_array($latestLoan->loan_status_id, $loanedStatus);
+    }
+
+    /**
+     * Gibt den aktuellen Status des Exemplars als String zurück
+     * Dies ist nützlich für die API-Ressource
+     */
+    public function getCurrentStatus(): string
+    {
+        if ($this->isAvailable()) {
+            return 'available';
+        }
+        if ($this->isReserved()) {
+            return 'reserved';
+        }
+        if ($this->isLoaned()) {
+            return 'loaned';
+        }
+        return 'unavailable';
     }
 
     /**

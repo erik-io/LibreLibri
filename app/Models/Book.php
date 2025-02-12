@@ -56,6 +56,28 @@ class Book extends Model
         'copies',
     ];
 
+    public function hasAvailableCopy(): bool
+    {
+        $availableStatus = cache()->remember('available_status_ids', 3600, function () {
+            return LoanStatus::whereIn('name', ['available', 'returned'])->pluck('id')->toArray();
+        });
+
+        // Prüfe, ob mindestens ein Exemplar verfügbar ist
+        return $this->copies()
+            ->whereHas('loans', function ($query) use ($availableStatus) {
+                $query->whereIn('loan_status_id', $availableStatus)
+                    ->whereNull('id', function ($subquery) {
+                        $subquery->select('id')
+                            ->from('loans as l2')
+                            ->whereColumn('l2.copy_id', 'loans.copy_id')
+                            ->latest()
+                            ->limit(1);
+                    });
+            })
+            ->orWhereDoesntHave('loans')
+            ->exists();
+        }
+
     /**
      * Die Beziehungen zu den Autoren des Buches.
      *
