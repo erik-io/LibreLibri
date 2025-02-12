@@ -21,6 +21,7 @@ import {
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { AlertCircle, CheckCircle, Clock } from 'lucide-vue-next';
+import { Search } from 'lucide-vue-next'
 import { ref } from 'vue';
 
 // Status für den Dialog
@@ -70,15 +71,22 @@ const showNotification = (message: string) => {
                 sind.
             </p>
         </template>
+
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <!-- Suchleiste -->
             <div class="mb-6 mt-2">
+                <div class="relative">
+                    <!-- Suchsymbol -->
+                    <div class="absolute pl-2 left-0 top-0 bottom-0 flex items-center pointer-events-none text-gray-500">
+                        <Search size="18"/>
+                    </div>
                 <TextInput
-                    class="w-full text-sm"
+                    class="w-full text-sm pl-10 placeholder:text-gray-400"
                     model-value=""
                     placeholder="Suche nach Titel, Autor, oder ISBN..."
                     type="text"
                 />
+                </div>
             </div>
 
             <!-- Büchertabelle -->
@@ -97,10 +105,12 @@ const showNotification = (message: string) => {
                         <TableCell> Der Herr der Ringe </TableCell>
                         <TableCell> J.R.R. Tolkien </TableCell>
                         <TableCell> 978-3-608-93981-1 </TableCell>
-                        <TableCell class="flex items-center gap-2">
+                        <TableCell class="h-[40px] whitespace-nowrap">
                             <!-- Verfügbar -->
-                            <CheckCircle class="h-5 w-5 text-green-500" />
+                            <div class="flex items-center gap-1.5 h-full">
+                            <CheckCircle class="h-4 w-4 text-green-500" />
                             Verfügbar
+                            </div>
                         </TableCell>
                         <TableCell>
                             <Button
@@ -124,10 +134,12 @@ const showNotification = (message: string) => {
                         </TableCell>
                         <TableCell> J.K. Rowling </TableCell>
                         <TableCell> 978-3-551-55677-8 </TableCell>
-                        <TableCell class="flex items-center gap-2">
+                        <TableCell class="h-[40px] whitespace-nowrap">
                             <!-- Reserviert -->
-                            <Clock class="h-5 w-5 text-yellow-500" />
+                            <div class="flex items-center gap-1.5 h-full">
+                            <Clock class="h-4 w-4 text-yellow-500" />
                             Reserviert
+                            </div>
                         </TableCell>
                         <TableCell>
                             <Button
@@ -150,10 +162,12 @@ const showNotification = (message: string) => {
                         <TableCell> Die unendliche Geschichte </TableCell>
                         <TableCell> Michael Ende </TableCell>
                         <TableCell> 978-3-7915-0460-3 </TableCell>
-                        <TableCell class="flex items-center gap-2">
+                        <TableCell class="h-[40px] whitespace-nowrap">
                             <!-- Ausgeliehen -->
-                            <AlertCircle class="h-5 w-5 text-red-500" />
+                            <div class="flex items-center gap-1.5 h-full">
+                            <AlertCircle class="h-4 w-4 text-red-500" />
                             Ausgeliehen
+                            </div>
                         </TableCell>
                         <TableCell>
                             <Button

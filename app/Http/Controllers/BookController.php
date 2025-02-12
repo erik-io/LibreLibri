@@ -11,8 +11,7 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::with(['authors', 'categories'])->get();
-        return Inertia::render('Books/Index',
-            ['books' => BookResource::collection($books)]);
+        $books = BookResource::collection(Book::all());
+        return Inertia('Books/Index', ['books' => $books]);
     }
 }

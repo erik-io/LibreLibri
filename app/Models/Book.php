@@ -50,10 +50,10 @@ class Book extends Model
         'deleted_at',
     ];
 
-    protected $with = [
-        'authors',
-        'categories',
-    ];
+//    protected $with = [
+//        'authors',
+//        'categories',
+//    ];
 
     /**
      * Die Beziehungen zu den Autoren des Buches.

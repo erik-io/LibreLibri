@@ -29,8 +29,7 @@ Route::middleware('auth')->group(function () {
     // Nur für die Entwicklung
     if (app()->environment('local')) {
         Route::get('/debug/books', function() {
-            $books = Book::with(['authors', 'categories'])->get();
-            return BookResource::collection($books);
+            return BookResource::collection(Book::all());
         });
     }
 
