@@ -124,7 +124,7 @@ const showNotification = (message: string) => {
                                 @click="
                                     handleLoan({
                                         title: book.title,
-                                        author: book.authors.formatted,
+                                        author: book.authors.full_name,
                                         isbn: book.isbn.isbn13,
                                     })
                                 "
