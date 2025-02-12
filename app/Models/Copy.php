@@ -45,6 +45,16 @@ class Copy extends Model
         return !$latestLoan || $latestLoan->loan_status_id === $availableStatusId;
     }
 
+    public function isReserved(): bool
+    {
+        $reservedStatusId = cache()->remember('loan_status_reserved', 3600, function () {
+            return LoanStatus::where('status', 'reserved')->first()->id;
+        });
+
+        $latestLoan = $this->loans()->latest()->first();
+        return $latestLoan && $latestLoan->loan_status_id === $reservedStatusId;
+    }
+
     /**
      * Beziehung zum zugehörigen Buch
      *

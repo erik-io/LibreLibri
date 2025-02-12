@@ -2,6 +2,7 @@
 import TextInput from '@/Components/TextInput.vue';
 import { Alert, AlertDescription } from '@/Components/ui/alert';
 import { Button } from '@/components/ui/button';
+import BookStatus from '@/Components/BookStatus.vue';
 import {
     Dialog,
     DialogContent,
@@ -20,9 +21,15 @@ import {
 } from '@/Components/ui/table';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { AlertCircle, CheckCircle, Clock } from 'lucide-vue-next';
-import { Search } from 'lucide-vue-next'
+import { Search } from 'lucide-vue-next';
 import { ref } from 'vue';
+
+defineProps({
+    books: {
+        type: Object,
+        required: true,
+    },
+});
 
 // Status für den Dialog
 const isDialogOpen = ref(false);
@@ -45,7 +52,7 @@ const confirmLoan = () => {
     isDialogOpen.value = false;
 
     // Alert anzeigen
-    showNotification('Das Buch wurde erfolgreich ausgeliehen.');
+    showNotification(selectedBook.value.title + ' von ' + selectedBook.value.author + ' wurde ausgeliehen.');
 };
 
 // Alert anzeigen für 3 Sekunden
@@ -65,7 +72,7 @@ const showNotification = (message: string) => {
     <AuthenticatedLayout>
         <!-- Header -->
         <template #header>
-            <h3 class="text-lg leading-6 font-medium">Bücher</h3>
+            <h3 class="text-lg font-medium leading-6">Bücher</h3>
             <p class="mt-1 text-sm">
                 Hier findest du alle Bücher, die in der Bibliothek verfügbar
                 sind.
@@ -77,15 +84,17 @@ const showNotification = (message: string) => {
             <div class="mb-6 mt-2">
                 <div class="relative">
                     <!-- Suchsymbol -->
-                    <div class="absolute pl-2 left-0 top-0 bottom-0 flex items-center pointer-events-none text-gray-500">
-                        <Search size="18"/>
+                    <div
+                        class="pointer-events-none absolute bottom-0 left-0 top-0 flex items-center pl-2 text-gray-500"
+                    >
+                        <Search size="18" />
                     </div>
-                <TextInput
-                    class="w-full text-sm pl-10 placeholder:text-gray-400"
-                    model-value=""
-                    placeholder="Suche nach Titel, Autor, oder ISBN..."
-                    type="text"
-                />
+                    <TextInput
+                        class="w-full pl-10 text-sm placeholder:text-gray-400"
+                        model-value=""
+                        placeholder="Suche nach Titel, Autor, oder ISBN..."
+                        type="text"
+                    />
                 </div>
             </div>
 
@@ -101,16 +110,12 @@ const showNotification = (message: string) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <TableRow>
-                        <TableCell> Der Herr der Ringe </TableCell>
-                        <TableCell> J.R.R. Tolkien </TableCell>
-                        <TableCell> 978-3-608-93981-1 </TableCell>
-                        <TableCell class="h-[40px] whitespace-nowrap">
-                            <!-- Verfügbar -->
-                            <div class="flex items-center gap-1.5 h-full">
-                            <CheckCircle class="h-4 w-4 text-green-500" />
-                            Verfügbar
-                            </div>
+                    <TableRow v-for="book in books.data" :key="book.id">
+                        <TableCell> {{ book.title }} </TableCell>
+                        <TableCell> {{ book.authors.full_name }} </TableCell>
+                        <TableCell> {{ book.isbn.isbn13 }} </TableCell>
+                        <TableCell>
+                            <BookStatus :status="book.status" />
                         </TableCell>
                         <TableCell>
                             <Button
@@ -118,69 +123,12 @@ const showNotification = (message: string) => {
                                 variant="default"
                                 @click="
                                     handleLoan({
-                                        title: 'Der Herr der Ringe',
-                                        author: 'J.R.R. Tolkien',
-                                        isbn: '978-3-608-93981-1',
+                                        title: book.title,
+                                        author: book.authors.formatted,
+                                        isbn: book.isbn.isbn13,
                                     })
                                 "
-                            >
-                                Ausleihen
-                            </Button>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell>
-                            Harry Potter und der Stein der Weisen
-                        </TableCell>
-                        <TableCell> J.K. Rowling </TableCell>
-                        <TableCell> 978-3-551-55677-8 </TableCell>
-                        <TableCell class="h-[40px] whitespace-nowrap">
-                            <!-- Reserviert -->
-                            <div class="flex items-center gap-1.5 h-full">
-                            <Clock class="h-4 w-4 text-yellow-500" />
-                            Reserviert
-                            </div>
-                        </TableCell>
-                        <TableCell>
-                            <Button
-                                disabled
-                                size="sm"
-                                variant="default"
-                                @click="
-                                    handleLoan({
-                                        title: 'Harry Potter und der Stein der Weisen',
-                                        author: 'J.K. Rowling',
-                                        isbn: '978-3-551-55677-8',
-                                    })
-                                "
-                            >
-                                Ausleihen
-                            </Button>
-                        </TableCell>
-                    </TableRow>
-                    <TableRow>
-                        <TableCell> Die unendliche Geschichte </TableCell>
-                        <TableCell> Michael Ende </TableCell>
-                        <TableCell> 978-3-7915-0460-3 </TableCell>
-                        <TableCell class="h-[40px] whitespace-nowrap">
-                            <!-- Ausgeliehen -->
-                            <div class="flex items-center gap-1.5 h-full">
-                            <AlertCircle class="h-4 w-4 text-red-500" />
-                            Ausgeliehen
-                            </div>
-                        </TableCell>
-                        <TableCell>
-                            <Button
-                                disabled
-                                size="sm"
-                                variant="default"
-                                @click="
-                                    handleLoan({
-                                        title: 'Die unendliche Geschichte',
-                                        author: 'Michael Ende',
-                                        isbn: '978-3-7915-0460-3',
-                                    })
-                                "
+                                :disabled="book.status.type !== 'available'"
                             >
                                 Ausleihen
                             </Button>
