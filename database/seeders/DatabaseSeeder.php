@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             CopiesTableSeeder::class,
             LoanStatusesTableSeeder::class,
             LibrarySettingsTableSeeder::class,
-            LoanTransactionsTableSeeder::class
+            LoanTransactionsTableSeeder::class,
+            DemoStateSeeder::class
         ]);
     }
 }

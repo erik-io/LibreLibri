@@ -51,27 +51,26 @@ class BookResource extends JsonResource
             // Verfügbarkeitsinformationen
             'status' => $this->whenLoaded('copies', function() {
                 // Wir prüfen alle Exemplare des Buches
-                $availableCopies = $this->copies->filter->isAvailable()->count();
                 $totalCopies = $this->copies->count();
 
                 if ($totalCopies === 0) {
                     return ['type' => 'unavailable', 'label' => 'Nicht verfügbar'];
                 }
 
-                if ($availableCopies > 0)
-                {
-                    return ['type' => 'available', 'label' => 'Verfügbar'];
+                // Zuerst auf Ausleihen prüfen
+                $loanedCopies = $this->copies->filter->isLoaned()->count();
+                if ($loanedCopies === $totalCopies) {
+                    return ['type' => 'loaned', 'label' => 'Ausgeliehen'];
                 }
 
-                // Prüfen auf Reservierungen
+                // Dann auf Reservierungen prüfen
                 $reservedCopies = $this->copies->filter->isReserved()->count();
-
-                if ($reservedCopies > 0)
-                {
+                if ($reservedCopies === $totalCopies) {
                     return ['type' => 'reserved', 'label' => 'Reserviert'];
                 }
 
-                return ['type' => 'loaned', 'label' => 'Ausgeliehen'];
+                // Wenn mindestens ein Exemplar verfügbar ist, ist das Buch verfügbar
+                return ['type' => 'available', 'label' => 'Verfügbar'];
             }),
         ];
     }
