@@ -57,7 +57,12 @@ class Copy extends Model
                 ->toArray();
         });
 
-        $latestLoan = $this->loans()->latest()->first();
+        // Nur aktive Reservierungen berücksichtigen (ohne Rückgabedatum)
+        $latestLoan = $this->loans()
+            ->whereNull('return_date')
+            ->latest()
+            ->first();
+
         return $latestLoan && in_array($latestLoan->loan_status_id, $reservedStatus);
     }
 
@@ -69,7 +74,11 @@ class Copy extends Model
                 ->toArray();
         });
 
-        $latestLoan = $this->loans()->latest()->first();
+        // Nur aktive Ausleihen berücksichtigen (ohne Rückgabedatum)
+        $latestLoan = $this->loans()
+            ->whereNull('return_date')
+            ->latest()
+            ->first();
         return $latestLoan && in_array($latestLoan->loan_status_id, $loanedStatus);
     }
 
